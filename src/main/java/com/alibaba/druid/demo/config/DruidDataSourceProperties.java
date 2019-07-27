@@ -1,6 +1,5 @@
 package com.alibaba.druid.demo.config;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @ConfigurationProperties(prefix = "spring.datasource.druid")

@@ -3,6 +3,8 @@ package com.alibaba.druid.demo.config;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.support.http.StatViewServlet;
 import com.alibaba.druid.support.http.WebStatFilter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -17,12 +19,12 @@ import java.sql.SQLException;
 @Configuration
 @EnableConfigurationProperties({DruidDataSourceProperties.class})
 public class DruidConfig {
-    @Autowired
-    private DruidDataSourceProperties properties;
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(DruidConfig.class);
 
     @Bean
     @ConditionalOnMissingBean
-    public DataSource druidDataSource() {
+    public DataSource druidDataSource(DruidDataSourceProperties properties) {
         DruidDataSource druidDataSource = new DruidDataSource();
         druidDataSource.setDriverClassName(properties.getDriverClassName());
         druidDataSource.setUrl(properties.getUrl());
@@ -45,7 +47,7 @@ public class DruidConfig {
             druidDataSource.setFilters(properties.getFilters());
             druidDataSource.init();
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.error(e.toString());
         }
 
         return druidDataSource;

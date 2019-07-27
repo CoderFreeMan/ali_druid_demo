@@ -1,5 +1,5 @@
-/**
- * 启动类
+/*
+  启动类
  */
 package com.alibaba.druid.demo;
 
